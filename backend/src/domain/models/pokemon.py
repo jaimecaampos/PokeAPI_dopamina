@@ -19,3 +19,4 @@ class RosterItem:
     pokemon_id: int
     name: str
     image_url: Optional[str]
+    nickname: Optional[str] = None

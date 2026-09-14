@@ -7,6 +7,7 @@ const GET_ROSTER = gql`
       pokemonId
       name
       imageUrl
+      nickname
     }
   }
 `;
@@ -33,8 +34,15 @@ function Roster() {
               ) : (
                 <div style={{width: 120, height: 120, margin: '0 auto', background: '#333'}} />
               )}
-              <h3>{item.name}</h3>
-              <div>ID: {item.pokemonId}</div>
+              {item.nickname ? (
+                <>
+                  <h3 style={{color: '#ffcc00'}}>{item.nickname}</h3>
+                  <div style={{fontSize: '8px', color: '#888'}}>({item.name})</div>
+                </>
+              ) : (
+                <h3>{item.name}</h3>
+              )}
+              <div style={{marginTop: '10px'}}>ID: {item.pokemonId}</div>
             </div>
           ))}
         </div>

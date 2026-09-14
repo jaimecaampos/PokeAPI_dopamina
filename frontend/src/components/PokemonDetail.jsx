@@ -16,10 +16,11 @@ const GET_POKEMON_DETAIL = gql`
 `;
 
 const SAVE_TO_ROSTER = gql`
-  mutation SaveToRoster($pokemonId: Int!, $name: String!, $imageUrl: String) {
-    saveToRoster(pokemonId: $pokemonId, name: $name, imageUrl: $imageUrl) {
+  mutation SaveToRoster($pokemonId: Int!, $name: String!, $imageUrl: String, $nickname: String) {
+    saveToRoster(pokemonId: $pokemonId, name: $name, imageUrl: $imageUrl, nickname: $nickname) {
       pokemonId
       name
+      nickname
     }
   }
 `;
@@ -28,6 +29,8 @@ function PokemonDetail({ name, onClose }) {
   const { loading, error, data } = useQuery(GET_POKEMON_DETAIL, {
     variables: { name },
   });
+  
+  const [nickname, setNickname] = React.useState('');
 
   const [saveToRoster, { loading: saving, error: saveError }] = useMutation(SAVE_TO_ROSTER, {
     refetchQueries: ['GetRoster']
@@ -61,7 +64,8 @@ function PokemonDetail({ name, onClose }) {
       variables: {
         pokemonId: pokemon.id,
         name: pokemon.name,
-        imageUrl: pokemon.imageUrl
+        imageUrl: pokemon.imageUrl,
+        nickname: nickname || null
       }
     }).then(() => alert('SAVED TO ROSTER!'));
   };
@@ -102,6 +106,24 @@ function PokemonDetail({ name, onClose }) {
             </div>
           )}
           
+          <div style={{ marginTop: '1rem', marginBottom: '1rem' }}>
+            <input
+              type="text"
+              placeholder="ENTER NICKNAME (OPTIONAL)"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '10px',
+                fontFamily: '"Press Start 2P", cursive',
+                fontSize: '10px',
+                background: '#000',
+                color: '#fff',
+                border: '2px solid #fff',
+                boxSizing: 'border-box'
+              }}
+            />
+          </div>
           <button 
             className="save-btn" 
             onClick={handleSave}

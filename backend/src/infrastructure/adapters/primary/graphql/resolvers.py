@@ -36,16 +36,17 @@ async def resolve_get_roster() -> List[RosterItemType]:
     use_case = get_roster_use_case()
     results = await use_case.execute()
     return [
-        RosterItemType(pokemon_id=r.pokemon_id, name=r.name, image_url=r.image_url)
+        RosterItemType(pokemon_id=r.pokemon_id, name=r.name, image_url=r.image_url, nickname=r.nickname)
         for r in results
     ]
 
-async def mutate_save_to_roster(pokemon_id: int, name: str, image_url: Optional[str] = None) -> RosterItemType:
+async def mutate_save_to_roster(pokemon_id: int, name: str, image_url: Optional[str] = None, nickname: Optional[str] = None) -> RosterItemType:
     use_case = get_save_to_roster_use_case()
-    item = RosterItem(pokemon_id=pokemon_id, name=name, image_url=image_url)
+    item = RosterItem(pokemon_id=pokemon_id, name=name, image_url=image_url, nickname=nickname)
     result = await use_case.execute(item)
     return RosterItemType(
         pokemon_id=result.pokemon_id, 
         name=result.name, 
-        image_url=result.image_url
+        image_url=result.image_url,
+        nickname=result.nickname
     )

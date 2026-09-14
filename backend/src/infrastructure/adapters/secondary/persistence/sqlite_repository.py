@@ -18,7 +18,8 @@ class SqliteRepository(RosterRepository):
             db_item = RosterItemModel(
                 pokemon_id=roster_item.pokemon_id,
                 name=roster_item.name,
-                image_url=roster_item.image_url
+                image_url=roster_item.image_url,
+                nickname=roster_item.nickname
             )
             self.session.add(db_item)
             self.session.commit()
@@ -31,7 +32,8 @@ class SqliteRepository(RosterRepository):
             RosterItem(
                 pokemon_id=item.pokemon_id,
                 name=item.name,
-                image_url=item.image_url
+                image_url=item.image_url,
+                nickname=item.nickname
             )
             for item in items
         ]

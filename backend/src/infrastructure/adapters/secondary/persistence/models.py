@@ -9,3 +9,4 @@ class RosterItemModel(Base):
     pokemon_id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
     image_url = Column(String, nullable=True)
+    nickname = Column(String, nullable=True)
