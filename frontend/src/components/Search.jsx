@@ -50,6 +50,7 @@ function Search() {
                 key={pokemon.id} 
                 className="card"
                 onClick={() => setSelectedPokemon(pokemon.name)}
+                style={{ cursor: 'pointer' }}
               >
                 {pokemon.imageUrl ? (
                   <img src={pokemon.imageUrl} alt={pokemon.name} />

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
+import PokemonDetail from './PokemonDetail';
 
 const GET_ROSTER = gql`
   query GetRoster {
@@ -13,6 +14,7 @@ const GET_ROSTER = gql`
 `;
 
 function Roster() {
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
   const { loading, error, data } = useQuery(GET_ROSTER);
 
   if (loading) return <div className="loading">LOADING ROSTER...</div>;
@@ -28,7 +30,12 @@ function Roster() {
       ) : (
         <div className="grid">
           {roster.map((item) => (
-            <div key={item.pokemonId} className="card">
+            <div 
+              key={item.pokemonId} 
+              className="card"
+              onClick={() => setSelectedPokemon(item.name)}
+              style={{ cursor: 'pointer' }}
+            >
               {item.imageUrl ? (
                 <img src={item.imageUrl} alt={item.name} />
               ) : (
@@ -46,6 +53,13 @@ function Roster() {
             </div>
           ))}
         </div>
+      )}
+
+      {selectedPokemon && (
+        <PokemonDetail 
+          name={selectedPokemon} 
+          onClose={() => setSelectedPokemon(null)} 
+        />
       )}
     </div>
   );
