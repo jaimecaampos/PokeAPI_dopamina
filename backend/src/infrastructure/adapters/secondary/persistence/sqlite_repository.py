@@ -22,7 +22,10 @@ class SqliteRepository(RosterRepository):
                 nickname=roster_item.nickname
             )
             self.session.add(db_item)
-            self.session.commit()
+        else:
+            existing.nickname = roster_item.nickname
+            
+        self.session.commit()
             
         return roster_item
 
