@@ -6,8 +6,8 @@ import { ArrowLeft, Heart } from "lucide-react";
 import { motion } from "framer-motion";
 
 const GET_POKEMON_DETAIL = `
-  query GetPokemonDetail($id: Int!) {
-    get_pokemon_detail(id: $id) {
+  query GetPokemonDetail($name: String!) {
+    get_pokemon_detail(name: $name) {
       id
       name
       image_url
@@ -19,8 +19,8 @@ const GET_POKEMON_DETAIL = `
 `;
 
 const SAVE_TO_ROSTER = `
-  mutation SaveToRoster($pokemonId: Int!) {
-    save_to_roster(pokemon_id: $pokemonId) {
+  mutation SaveToRoster($pokemonId: Int!, $name: String!, $imageUrl: String!) {
+    save_to_roster(pokemon_id: $pokemonId, name: $name, image_url: $imageUrl) {
       pokemon_id
       name
     }
@@ -59,10 +59,10 @@ interface PokemonDetail {
   description: string;
 }
 
-export default function PokemonDetail() {
+export default function PokemonDetailComponent() {
   const params = useParams();
   const router = useRouter();
-  const id = parseInt(params.id as string, 10);
+  const pokemonName = params.id as string; // from the URL path parameter
 
   const [data, setData] = useState<{get_pokemon_detail: PokemonDetail} | null>(null);
   const [loading, setLoading] = useState(true);
@@ -70,12 +70,12 @@ export default function PokemonDetail() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (isNaN(id)) return;
+    if (!pokemonName) return;
     
     fetch(process.env.NEXT_PUBLIC_GRAPHQL_URL || "http://localhost:8000/graphql", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ query: GET_POKEMON_DETAIL, variables: { id } }),
+      body: JSON.stringify({ query: GET_POKEMON_DETAIL, variables: { name: pokemonName } }),
     })
       .then((res) => res.json())
       .then((res) => {
@@ -86,14 +86,22 @@ export default function PokemonDetail() {
         setError(true);
         setLoading(false);
       });
-  }, [id]);
+  }, [pokemonName]);
 
   const handleSave = () => {
+    if (!data?.get_pokemon_detail) return;
     setSaving(true);
     fetch(process.env.NEXT_PUBLIC_GRAPHQL_URL || "http://localhost:8000/graphql", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ query: SAVE_TO_ROSTER, variables: { pokemonId: id } }),
+      body: JSON.stringify({ 
+        query: SAVE_TO_ROSTER, 
+        variables: { 
+          pokemonId: data.get_pokemon_detail.id,
+          name: data.get_pokemon_detail.name,
+          imageUrl: data.get_pokemon_detail.image_url
+        } 
+      }),
     })
       .then((res) => res.json())
       .then(() => {
@@ -109,8 +117,8 @@ export default function PokemonDetail() {
   if (error || !data?.get_pokemon_detail) return <div className="min-h-screen p-6 text-destructive">Error loading detail.</div>;
 
   const pokemon = data.get_pokemon_detail;
-  const types = getMockTypes(id);
-  const stats = getMockStats(id);
+  const types = getMockTypes(pokemon.id);
+  const stats = getMockStats(pokemon.id);
   const primaryType = types[0];
 
   return (

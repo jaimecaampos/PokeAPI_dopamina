@@ -5,9 +5,9 @@ import { Search } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-const query = `
-  query SearchPokemon {
-    search_pokemon {
+const queryStr = `
+  query SearchPokemon($query: String!) {
+    search_pokemon(query: $query) {
       id
       name
       image_url
@@ -37,7 +37,7 @@ export default function ArcadeDex() {
     fetch(process.env.NEXT_PUBLIC_GRAPHQL_URL || "http://localhost:8000/graphql", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({ query: queryStr, variables: { query: "" } }),
     })
       .then((res) => res.json())
       .then((res) => {
@@ -149,7 +149,7 @@ export default function ArcadeDex() {
               : "group-hover:neon-border-yellow";
 
           return (
-            <Link key={pokemon.id} href={`/pokemon/${pokemon.id}`}>
+            <Link key={pokemon.id} href={`/pokemon/${pokemon.name}`}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
