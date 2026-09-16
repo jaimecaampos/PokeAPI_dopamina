@@ -43,38 +43,38 @@
 
 :root {
   /* We default to the dark arcade theme */
-  --background: oklch(0.13 0.02 260); /* Deep navy dark */
-  --foreground: oklch(0.98 0 0); /* Almost white */
+  --background: oklch(0.1 0.05 280); /* Deep purple-black */
+  --foreground: oklch(0.98 0.05 280); /* Bright white with tint */
   
-  --card: oklch(0.16 0.03 260); /* Slightly lighter navy */
-  --card-foreground: oklch(0.98 0 0);
+  --card: oklch(0.15 0.08 280); /* Vibrant dark purple */
+  --card-foreground: oklch(0.98 0.05 280);
   
-  --popover: oklch(0.16 0.03 260);
-  --popover-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.15 0.08 280);
+  --popover-foreground: oklch(0.98 0.05 280);
   
-  --primary: oklch(0.65 0.25 25); /* Arcade Neon Red */
+  --primary: oklch(0.65 0.3 20); /* Neon Hot Red */
   --primary-foreground: oklch(0.98 0 0);
   
-  --secondary: oklch(0.22 0.04 260);
-  --secondary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.25 0.1 280);
+  --secondary-foreground: oklch(0.98 0.05 280);
   
-  --muted: oklch(0.22 0.04 260);
-  --muted-foreground: oklch(0.7 0.02 260);
+  --muted: oklch(0.2 0.08 280);
+  --muted-foreground: oklch(0.7 0.1 280);
   
-  --accent: oklch(0.22 0.04 260);
-  --accent-foreground: oklch(0.98 0 0);
+  --accent: oklch(0.3 0.15 280);
+  --accent-foreground: oklch(0.98 0.05 280);
   
-  --destructive: oklch(0.65 0.25 25);
+  --destructive: oklch(0.65 0.3 20);
   --destructive-foreground: oklch(0.98 0 0);
   
-  --border: oklch(0.25 0.05 260);
-  --input: oklch(0.25 0.05 260);
-  --ring: oklch(0.65 0.25 25);
+  --border: oklch(0.3 0.1 280);
+  --input: oklch(0.2 0.08 280);
+  --ring: oklch(0.65 0.3 20);
   
-  --arcade-red: oklch(0.65 0.25 25);
-  --arcade-blue: oklch(0.6 0.15 240);
-  --arcade-green: oklch(0.65 0.15 150);
-  --arcade-yellow: oklch(0.75 0.15 90);
+  --arcade-red: oklch(0.65 0.3 20); /* Hot Pink/Red */
+  --arcade-blue: oklch(0.7 0.2 230); /* Cyan / Electric Blue */
+  --arcade-green: oklch(0.75 0.25 140); /* Acid Green */
+  --arcade-yellow: oklch(0.85 0.2 90); /* Neon Yellow */
   
   --radius: 0.75rem;
 }
@@ -103,19 +103,19 @@
 /* Custom retro animation utilities */
 @layer utilities {
   .neon-border-red {
-    box-shadow: 0 0 5px var(--arcade-red), inset 0 0 5px var(--arcade-red);
+    box-shadow: 0 0 8px var(--arcade-red), 0 0 15px var(--arcade-red), inset 0 0 8px var(--arcade-red);
     border-color: var(--arcade-red);
   }
   .neon-border-blue {
-    box-shadow: 0 0 5px var(--arcade-blue), inset 0 0 5px var(--arcade-blue);
+    box-shadow: 0 0 8px var(--arcade-blue), 0 0 15px var(--arcade-blue), inset 0 0 8px var(--arcade-blue);
     border-color: var(--arcade-blue);
   }
   .neon-border-green {
-    box-shadow: 0 0 5px var(--arcade-green), inset 0 0 5px var(--arcade-green);
+    box-shadow: 0 0 8px var(--arcade-green), 0 0 15px var(--arcade-green), inset 0 0 8px var(--arcade-green);
     border-color: var(--arcade-green);
   }
   .neon-border-yellow {
-    box-shadow: 0 0 5px var(--arcade-yellow), inset 0 0 5px var(--arcade-yellow);
+    box-shadow: 0 0 8px var(--arcade-yellow), 0 0 15px var(--arcade-yellow), inset 0 0 8px var(--arcade-yellow);
     border-color: var(--arcade-yellow);
   }
   
