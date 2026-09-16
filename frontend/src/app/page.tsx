@@ -32,12 +32,22 @@ export default function ArcadeDex() {
   const [error, setError] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFilter, setActiveFilter] = useState("ALL");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+
+  // Debounce search term
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
 
   useEffect(() => {
+    setLoading(true);
     fetch(process.env.NEXT_PUBLIC_GRAPHQL_URL || "http://localhost:8000/graphql", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ query: queryStr, variables: { query: "" } }),
+      body: JSON.stringify({ query: queryStr, variables: { query: debouncedSearch } }),
     })
       .then((res) => res.json())
       .then((res) => {
@@ -48,17 +58,11 @@ export default function ArcadeDex() {
         setError(true);
         setLoading(false);
       });
-  }, []);
+  }, [debouncedSearch]);
 
   const filters = ["ALL", "FIRE", "WATER", "GRASS", "ELECTRIC"];
 
   let filteredPokemon = data?.search_pokemon || [];
-
-  if (searchTerm) {
-    filteredPokemon = filteredPokemon.filter((p: PokemonItem) =>
-      p.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }
 
   if (activeFilter !== "ALL") {
     filteredPokemon = filteredPokemon.filter((p: PokemonItem) =>
