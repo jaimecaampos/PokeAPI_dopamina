@@ -10,7 +10,7 @@ class PokeApiClient(ApiClient):
     async def search_pokemon(self, query: str) -> List[Pokemon]:
         graphql_query = """
         query searchPokemon($name: String!) {
-          pokemon_v2_pokemon(where: {name: {_ilike: $name}}, limit: 20) {
+          pokemon_v2_pokemon(where: {name: {_ilike: $name}}) {
             id
             name
             pokemon_v2_pokemonsprites {
