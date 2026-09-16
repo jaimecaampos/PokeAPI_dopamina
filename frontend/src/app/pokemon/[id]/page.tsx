@@ -19,10 +19,11 @@ const GET_POKEMON_DETAIL = `
 `;
 
 const SAVE_TO_ROSTER = `
-  mutation SaveToRoster($pokemonId: Int!, $name: String!, $imageUrl: String!) {
-    saveToRoster(pokemonId: $pokemonId, name: $name, imageUrl: $imageUrl) {
+  mutation SaveToRoster($pokemonId: Int!, $name: String!, $imageUrl: String!, $nickname: String) {
+    saveToRoster(pokemonId: $pokemonId, name: $name, imageUrl: $imageUrl, nickname: $nickname) {
       pokemonId
       name
+      nickname
     }
   }
 `;
@@ -68,6 +69,7 @@ export default function PokemonDetailComponent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [nickname, setNickname] = useState("");
 
   useEffect(() => {
     if (!pokemonName) return;
@@ -99,7 +101,8 @@ export default function PokemonDetailComponent() {
         variables: { 
           pokemonId: data.getPokemonDetail.id,
           name: data.getPokemonDetail.name,
-          imageUrl: data.getPokemonDetail.imageUrl
+          imageUrl: data.getPokemonDetail.imageUrl,
+          nickname: nickname.trim() || null
         } 
       }),
     })
@@ -217,6 +220,21 @@ export default function PokemonDetailComponent() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Nickname Input */}
+        <div className="mb-6">
+          <label className="text-xs font-bold text-muted-foreground uppercase tracking-widest block mb-2">
+            Assign Nickname (Optional)
+          </label>
+          <input 
+            type="text"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+            placeholder="e.g. Sparky"
+            maxLength={20}
+            className="w-full bg-input/50 border border-border/50 text-white text-sm rounded-xl focus:ring-primary focus:border-primary block p-4 transition-all outline-none"
+          />
         </div>
 
         {/* Assign Button */}

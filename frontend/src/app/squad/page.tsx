@@ -100,7 +100,7 @@ export default function MySquad() {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-white capitalize mb-1">
-                    {item.name}
+                    {item.nickname ? `${item.nickname} (${item.name})` : item.name}
                   </h3>
                   <div className="flex gap-2">
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border flex items-center gap-1 ${
