@@ -5,7 +5,8 @@ from src.infrastructure.config.dependencies import (
     get_search_pokemon_use_case,
     get_pokemon_detail_use_case,
     get_save_to_roster_use_case,
-    get_roster_use_case
+    get_roster_use_case,
+    get_delete_from_roster_use_case
 )
 from src.domain.models.pokemon import RosterItem
 
@@ -50,3 +51,7 @@ async def mutate_save_to_roster(pokemon_id: int, name: str, image_url: Optional[
         image_url=result.image_url,
         nickname=result.nickname
     )
+
+async def mutate_delete_from_roster(pokemon_id: int) -> bool:
+    use_case = get_delete_from_roster_use_case()
+    return await use_case.execute(pokemon_id)

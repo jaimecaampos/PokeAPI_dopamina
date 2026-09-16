@@ -40,3 +40,13 @@ class SqliteRepository(RosterRepository):
             )
             for item in items
         ]
+
+    async def delete_pokemon(self, pokemon_id: int) -> bool:
+        existing = self.session.query(RosterItemModel).filter(
+            RosterItemModel.pokemon_id == pokemon_id
+        ).first()
+        if existing:
+            self.session.delete(existing)
+            self.session.commit()
+            return True
+        return False

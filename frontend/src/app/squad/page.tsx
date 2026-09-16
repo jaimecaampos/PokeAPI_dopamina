@@ -16,6 +16,12 @@ const GET_ROSTER = `
   }
 `;
 
+const REMOVE_FROM_ROSTER = `
+  mutation DeleteFromRoster($pokemonId: Int!) {
+    deleteFromRoster(pokemonId: $pokemonId)
+  }
+`;
+
 function getMockTypes(id: number) {
   const types = ["FIRE", "WATER", "GRASS", "ELECTRIC"];
   return [types[id % types.length], types[(id + 1) % types.length]];
@@ -49,6 +55,27 @@ export default function MySquad() {
         setLoading(false);
       });
   }, []);
+
+  const handleRemove = async (pokemonId: number) => {
+    try {
+      const res = await fetch(process.env.NEXT_PUBLIC_GRAPHQL_URL || "http://localhost:8000/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          query: REMOVE_FROM_ROSTER,
+          variables: { pokemonId }
+        }),
+      });
+      const result = await res.json();
+      if (result.data?.deleteFromRoster) {
+        setData(prev => prev ? {
+          getRoster: prev.getRoster.filter(item => item.pokemonId !== pokemonId)
+        } : null);
+      }
+    } catch (e) {
+      console.error("Failed to remove pokemon", e);
+    }
+  };
 
   const roster = data?.getRoster || [];
   const maxSquadSize = 6;
@@ -119,7 +146,10 @@ export default function MySquad() {
                 <div className="text-muted-foreground text-xs font-bold">
                   #{item.pokemonId.toString().padStart(3, "0")}
                 </div>
-                <button className="w-6 h-6 rounded-full bg-input flex items-center justify-center text-muted-foreground hover:bg-destructive hover:text-white transition-colors">
+                <button 
+                  onClick={() => handleRemove(item.pokemonId)}
+                  className="w-6 h-6 rounded-full bg-input flex items-center justify-center text-muted-foreground hover:bg-destructive hover:text-white transition-colors"
+                >
                   <X className="w-3.5 h-3.5" />
                 </button>
               </div>

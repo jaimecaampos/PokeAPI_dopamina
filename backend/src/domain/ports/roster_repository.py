@@ -10,3 +10,7 @@ class RosterRepository(ABC):
     @abstractmethod
     async def get_roster(self) -> List[RosterItem]:
         pass
+
+    @abstractmethod
+    async def delete_pokemon(self, pokemon_id: int) -> bool:
+        pass

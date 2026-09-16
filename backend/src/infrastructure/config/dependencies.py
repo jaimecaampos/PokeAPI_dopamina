@@ -4,6 +4,7 @@ from src.application.search_pokemon import SearchPokemonUseCase
 from src.application.get_pokemon_detail import GetPokemonDetailUseCase
 from src.application.save_to_roster import SaveToRosterUseCase
 from src.application.get_roster import GetRosterUseCase
+from src.application.delete_from_roster import DeleteFromRosterUseCase
 from src.infrastructure.config.database import SessionLocal
 
 def get_api_client() -> PokeApiClient:
@@ -27,3 +28,6 @@ def get_save_to_roster_use_case() -> SaveToRosterUseCase:
 
 def get_roster_use_case() -> GetRosterUseCase:
     return GetRosterUseCase(get_repository())
+
+def get_delete_from_roster_use_case() -> DeleteFromRosterUseCase:
+    return DeleteFromRosterUseCase(get_repository())

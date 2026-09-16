@@ -5,7 +5,8 @@ from .resolvers import (
     resolve_search_pokemon,
     resolve_get_pokemon_detail,
     resolve_get_roster,
-    mutate_save_to_roster
+    mutate_save_to_roster,
+    mutate_delete_from_roster
 )
 
 @strawberry.type
@@ -17,5 +18,6 @@ class Query:
 @strawberry.type
 class Mutation:
     save_to_roster: RosterItemType = strawberry.field(resolver=mutate_save_to_roster)
+    delete_from_roster: bool = strawberry.field(resolver=mutate_delete_from_roster)
 
 schema = strawberry.Schema(query=Query, mutation=Mutation)
