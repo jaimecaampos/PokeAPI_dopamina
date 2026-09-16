@@ -124,7 +124,17 @@ export default function ArcadeDex() {
 
       <div className="flex flex-col gap-4">
         {loading && <div className="text-center text-primary py-10 animate-pulse">LOADING...</div>}
-        {error && <div className="text-destructive">Error loading Dex.</div>}
+        {error && (
+          <div className="text-destructive font-bold p-6 bg-red-900/20 rounded-xl border border-red-500 text-center">
+            <p className="text-lg mb-2">SYSTEM ERROR: NO CONNECTION</p>
+            <p className="text-xs text-muted-foreground break-all">
+              Failed to connect to: {process.env.NEXT_PUBLIC_GRAPHQL_URL || "http://localhost:8000/graphql"}
+            </p>
+            <p className="text-xs text-muted-foreground mt-2">
+              If you are on Vercel, ensure NEXT_PUBLIC_GRAPHQL_URL is set in your Environment Variables.
+            </p>
+          </div>
+        )}
         
         {filteredPokemon.map((pokemon: PokemonItem, index: number) => {
           const types = getMockTypes(pokemon.id);
