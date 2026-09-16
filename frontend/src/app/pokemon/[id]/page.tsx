@@ -7,10 +7,10 @@ import { motion } from "framer-motion";
 
 const GET_POKEMON_DETAIL = `
   query GetPokemonDetail($name: String!) {
-    get_pokemon_detail(name: $name) {
+    getPokemonDetail(name: $name) {
       id
       name
-      image_url
+      imageUrl
       height
       weight
       description
@@ -20,8 +20,8 @@ const GET_POKEMON_DETAIL = `
 
 const SAVE_TO_ROSTER = `
   mutation SaveToRoster($pokemonId: Int!, $name: String!, $imageUrl: String!) {
-    save_to_roster(pokemon_id: $pokemonId, name: $name, image_url: $imageUrl) {
-      pokemon_id
+    saveToRoster(pokemonId: $pokemonId, name: $name, imageUrl: $imageUrl) {
+      pokemonId
       name
     }
   }
@@ -53,7 +53,7 @@ function getStatColor(stat: string) {
 interface PokemonDetail {
   id: number;
   name: string;
-  image_url: string;
+  imageUrl: string;
   height: number;
   weight: number;
   description: string;
@@ -64,7 +64,7 @@ export default function PokemonDetailComponent() {
   const router = useRouter();
   const pokemonName = params.id as string; // from the URL path parameter
 
-  const [data, setData] = useState<{get_pokemon_detail: PokemonDetail} | null>(null);
+  const [data, setData] = useState<{getPokemonDetail: PokemonDetail} | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -89,7 +89,7 @@ export default function PokemonDetailComponent() {
   }, [pokemonName]);
 
   const handleSave = () => {
-    if (!data?.get_pokemon_detail) return;
+    if (!data?.getPokemonDetail) return;
     setSaving(true);
     fetch(process.env.NEXT_PUBLIC_GRAPHQL_URL || "http://localhost:8000/graphql", {
       method: "POST",
@@ -97,9 +97,9 @@ export default function PokemonDetailComponent() {
       body: JSON.stringify({ 
         query: SAVE_TO_ROSTER, 
         variables: { 
-          pokemonId: data.get_pokemon_detail.id,
-          name: data.get_pokemon_detail.name,
-          imageUrl: data.get_pokemon_detail.image_url
+          pokemonId: data.getPokemonDetail.id,
+          name: data.getPokemonDetail.name,
+          imageUrl: data.getPokemonDetail.imageUrl
         } 
       }),
     })
@@ -114,9 +114,9 @@ export default function PokemonDetailComponent() {
   };
 
   if (loading) return <div className="min-h-screen p-6 text-primary flex items-center justify-center animate-pulse font-bold text-2xl">LOADING DATA...</div>;
-  if (error || !data?.get_pokemon_detail) return <div className="min-h-screen p-6 text-destructive">Error loading detail.</div>;
+  if (error || !data?.getPokemonDetail) return <div className="min-h-screen p-6 text-destructive">Error loading detail.</div>;
 
-  const pokemon = data.get_pokemon_detail;
+  const pokemon = data.getPokemonDetail;
   const types = getMockTypes(pokemon.id);
   const stats = getMockStats(pokemon.id);
   const primaryType = types[0];
@@ -155,7 +155,7 @@ export default function PokemonDetailComponent() {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img 
-            src={pokemon.image_url || `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`} 
+            src={pokemon.imageUrl || `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`} 
             alt={pokemon.name} 
             className="h-full object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] pixelated"
             style={{ imageRendering: "pixelated" }}

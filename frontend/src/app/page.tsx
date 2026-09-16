@@ -7,10 +7,10 @@ import { motion } from "framer-motion";
 
 const queryStr = `
   query SearchPokemon($query: String!) {
-    search_pokemon(query: $query) {
+    searchPokemon(query: $query) {
       id
       name
-      image_url
+      imageUrl
     }
   }
 `;
@@ -23,11 +23,11 @@ function getMockTypes(id: number) {
 interface PokemonItem {
   id: number;
   name: string;
-  image_url: string;
+  imageUrl: string;
 }
 
 export default function ArcadeDex() {
-  const [data, setData] = useState<{search_pokemon: PokemonItem[]} | null>(null);
+  const [data, setData] = useState<{searchPokemon: PokemonItem[]} | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -62,7 +62,7 @@ export default function ArcadeDex() {
 
   const filters = ["ALL", "FIRE", "WATER", "GRASS", "ELECTRIC"];
 
-  let filteredPokemon = data?.search_pokemon || [];
+  let filteredPokemon = data?.searchPokemon || [];
 
   if (activeFilter !== "ALL") {
     filteredPokemon = filteredPokemon.filter((p: PokemonItem) =>
@@ -162,7 +162,7 @@ export default function ArcadeDex() {
               >
                 <div className={`w-20 h-20 rounded-xl flex items-center justify-center bg-background p-2 transition-all duration-300 border-2 border-transparent ${borderClass}`}>
                   <img
-                    src={pokemon.image_url || `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
+                    src={pokemon.imageUrl || `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
                     alt={pokemon.name}
                     className="w-full h-full object-contain pixelated"
                     style={{ imageRendering: "pixelated" }}

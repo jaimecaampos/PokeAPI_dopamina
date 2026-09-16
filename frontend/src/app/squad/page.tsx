@@ -7,10 +7,10 @@ import Link from "next/link";
 
 const GET_ROSTER = `
   query GetRoster {
-    get_roster {
-      pokemon_id
+    getRoster {
+      pokemonId
       name
-      image_url
+      imageUrl
       nickname
     }
   }
@@ -22,14 +22,14 @@ function getMockTypes(id: number) {
 }
 
 interface RosterItem {
-  pokemon_id: number;
+  pokemonId: number;
   name: string;
-  image_url: string;
+  imageUrl: string;
   nickname: string | null;
 }
 
 export default function MySquad() {
-  const [data, setData] = useState<{get_roster: RosterItem[]} | null>(null);
+  const [data, setData] = useState<{getRoster: RosterItem[]} | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -50,7 +50,7 @@ export default function MySquad() {
       });
   }, []);
 
-  const roster = data?.get_roster || [];
+  const roster = data?.getRoster || [];
   const maxSquadSize = 6;
   const emptySlots = Math.max(0, maxSquadSize - roster.length);
 
@@ -75,14 +75,14 @@ export default function MySquad() {
         
         {/* Filled Slots */}
         {roster.map((item: RosterItem, index: number) => {
-          const types = getMockTypes(item.pokemon_id);
+          const types = getMockTypes(item.pokemonId);
           const primaryType = types[0];
           const borderClass =
             primaryType === "FIRE" ? "neon-border-red" : primaryType === "WATER" ? "neon-border-blue" : primaryType === "GRASS" ? "neon-border-green" : "neon-border-yellow";
 
           return (
             <motion.div
-              key={item.pokemon_id + index}
+              key={item.pokemonId + index}
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1 }}
@@ -92,7 +92,7 @@ export default function MySquad() {
                 <div className={`w-16 h-16 rounded-xl flex items-center justify-center bg-background border border-border/50`}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={item.image_url || `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.pokemon_id}.png`}
+                    src={item.imageUrl || `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.pokemonId}.png`}
                     alt={item.name}
                     className="w-full h-full object-contain pixelated"
                     style={{ imageRendering: "pixelated" }}
@@ -117,7 +117,7 @@ export default function MySquad() {
               
               <div className="flex flex-col items-end gap-3">
                 <div className="text-muted-foreground text-xs font-bold">
-                  #{item.pokemon_id.toString().padStart(3, "0")}
+                  #{item.pokemonId.toString().padStart(3, "0")}
                 </div>
                 <button className="w-6 h-6 rounded-full bg-input flex items-center justify-center text-muted-foreground hover:bg-destructive hover:text-white transition-colors">
                   <X className="w-3.5 h-3.5" />
