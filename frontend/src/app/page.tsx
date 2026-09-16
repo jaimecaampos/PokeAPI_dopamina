@@ -73,7 +73,7 @@ export default function ArcadeDex() {
   return (
     <div className="min-h-screen bg-background text-foreground p-6 pt-12 pb-32">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-black uppercase tracking-wider text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
+        <h1 className="text-3xl font-black uppercase tracking-wider text-foreground drop-shadow-[0_0_10px_rgba(0,0,0,0.1)]">
           Poke Dex
         </h1>
         <div className="bg-primary/20 text-primary px-3 py-1 rounded-full text-xs font-bold neon-border-red">
@@ -87,7 +87,7 @@ export default function ArcadeDex() {
         </div>
         <input
           type="text"
-          className="w-full bg-input/50 border border-border/50 text-white text-sm rounded-xl focus:ring-primary focus:border-primary block pl-10 p-3 transition-all outline-none group-focus-within:neon-border-red"
+          className="w-full bg-card border border-border/50 text-foreground text-sm rounded-xl focus:ring-primary focus:border-primary block pl-10 p-3 transition-all outline-none group-focus-within:neon-border-red shadow-sm"
           placeholder="Search fictional buddy..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -172,7 +172,7 @@ export default function ArcadeDex() {
                   <div className="text-muted-foreground text-xs font-bold mb-1">
                     #{pokemon.id.toString().padStart(3, "0")}
                   </div>
-                  <h3 className="text-xl font-bold text-white capitalize mb-2">
+                  <h3 className="text-xl font-bold text-foreground capitalize mb-2">
                     {pokemon.name}
                   </h3>
                   <div className="flex gap-2">

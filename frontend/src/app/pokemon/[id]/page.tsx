@@ -138,13 +138,13 @@ export default function PokemonDetailComponent() {
         
         {/* Top bar */}
         <div className="relative z-10 flex justify-between items-center mb-8">
-          <button onClick={() => router.back()} className="text-white hover:text-primary transition-colors">
+          <button onClick={() => router.back()} className="text-foreground hover:text-primary transition-colors">
             <ArrowLeft className="w-6 h-6" />
           </button>
-          <div className="text-white font-mono tracking-widest text-sm font-bold">
+          <div className="text-foreground font-mono tracking-widest text-sm font-bold">
             NO. {pokemon.id.toString().padStart(3, "0")}
           </div>
-          <button onClick={handleSave} className="text-white hover:text-arcade-red transition-colors">
+          <button onClick={handleSave} className="text-foreground hover:text-arcade-red transition-colors">
             <Heart className="w-6 h-6" />
           </button>
         </div>
@@ -168,7 +168,7 @@ export default function PokemonDetailComponent() {
 
       {/* Info Section */}
       <div className="px-6 py-8">
-        <h1 className="text-4xl font-black text-white capitalize mb-4">{pokemon.name}</h1>
+        <h1 className="text-4xl font-black text-foreground capitalize mb-4">{pokemon.name}</h1>
         
         <div className="flex gap-2 mb-4 items-center">
           {types.map((type, i) => (
@@ -193,23 +193,23 @@ export default function PokemonDetailComponent() {
 
         {/* Height and Weight Cards */}
         <div className="grid grid-cols-2 gap-4 mb-8">
-          <div className="bg-card border border-border/50 rounded-2xl p-4 text-center">
-            <div className="text-xl font-bold text-white mb-1">{pokemon.height / 10} M</div>
+          <div className="bg-card border border-border/50 rounded-2xl p-4 text-center shadow-sm">
+            <div className="text-xl font-bold text-foreground mb-1">{pokemon.height / 10} M</div>
             <div className="text-xs text-muted-foreground uppercase font-bold">Height</div>
           </div>
-          <div className="bg-card border border-border/50 rounded-2xl p-4 text-center">
-            <div className="text-xl font-bold text-white mb-1">{pokemon.weight / 10} KG</div>
+          <div className="bg-card border border-border/50 rounded-2xl p-4 text-center shadow-sm">
+            <div className="text-xl font-bold text-foreground mb-1">{pokemon.weight / 10} KG</div>
             <div className="text-xs text-muted-foreground uppercase font-bold">Weight</div>
           </div>
         </div>
 
         {/* Base Combat Stats */}
-        <h2 className="text-sm font-bold text-white mb-4 tracking-widest uppercase">Base Combat Stats</h2>
+        <h2 className="text-sm font-bold text-foreground mb-4 tracking-widest uppercase">Base Combat Stats</h2>
         <div className="space-y-4 mb-8">
           {Object.entries(stats).map(([stat, value]) => (
             <div key={stat} className="flex items-center gap-4">
               <div className="w-10 text-xs font-bold text-muted-foreground uppercase">{stat}</div>
-              <div className="w-8 text-sm font-bold text-white text-right">{value}</div>
+              <div className="w-8 text-sm font-bold text-foreground text-right">{value}</div>
               <div className="flex-1 h-2.5 bg-input rounded-full overflow-hidden">
                 <motion.div 
                   initial={{ width: 0 }}
@@ -233,7 +233,7 @@ export default function PokemonDetailComponent() {
             onChange={(e) => setNickname(e.target.value)}
             placeholder="e.g. Sparky"
             maxLength={20}
-            className="w-full bg-input/50 border border-border/50 text-white text-sm rounded-xl focus:ring-primary focus:border-primary block p-4 transition-all outline-none"
+            className="w-full bg-card border border-border/50 text-foreground text-sm rounded-xl focus:ring-primary focus:border-primary block p-4 transition-all outline-none shadow-sm"
           />
         </div>
 

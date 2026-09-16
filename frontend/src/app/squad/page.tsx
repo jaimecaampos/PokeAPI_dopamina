@@ -57,7 +57,7 @@ export default function MySquad() {
   return (
     <div className="min-h-screen bg-background text-foreground p-6 pt-12 pb-32">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-black uppercase tracking-wider text-white">
+        <h1 className="text-3xl font-black uppercase tracking-wider text-foreground">
           My Squad
         </h1>
         <div className="border border-arcade-red text-arcade-red px-3 py-1 rounded-full text-xs font-bold">
@@ -99,7 +99,7 @@ export default function MySquad() {
                   />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white capitalize mb-1">
+                  <h3 className="text-lg font-bold text-foreground capitalize mb-1">
                     {item.nickname ? `${item.nickname} (${item.name})` : item.name}
                   </h3>
                   <div className="flex gap-2">
